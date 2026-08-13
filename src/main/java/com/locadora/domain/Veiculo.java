@@ -12,12 +12,12 @@ public class Veiculo {
     private String placa;
     private String modelo;
     private double valorDiaria;
-    private StatusVeiculo statusVeiculo;
+    private Status status;
 
-    public Veiculo(String placa, String modelo, double valorDiaria, StatusVeiculo statusVeiculo) {
+    public Veiculo(String placa, String modelo, double valorDiaria, Status status) {
         this.placa = placa;
         this.modelo = modelo;
         this.valorDiaria = valorDiaria;
-        this.statusVeiculo = statusVeiculo;
+        this.status = status;
     }
 }

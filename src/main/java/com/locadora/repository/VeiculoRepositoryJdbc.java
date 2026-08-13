@@ -1,8 +1,7 @@
 package com.locadora.repository;
 
 import com.locadora.conn.ConnectionFactory;
-import com.locadora.domain.Cliente;
-import com.locadora.domain.StatusVeiculo;
+import com.locadora.domain.Status;
 import com.locadora.domain.Veiculo;
 
 import java.sql.*;
@@ -13,7 +12,7 @@ import java.util.Optional;
 public class VeiculoRepositoryJdbc {
 
     public static Veiculo slavar(Veiculo veiculo){
-        String sql = "INSERT INTO `locadora_db`.`veiculo` (`placa`, `modelo`, `valor_diaria`, `status`) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO `locadora_db`.`veiculo` (`placa`, `modelo`, `valor_diaria`, `status`) VALUES (?, ?, ?, `DISPONIVEL`);";
 
         try(Connection conn = ConnectionFactory.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -21,7 +20,6 @@ public class VeiculoRepositoryJdbc {
             stmt.setString(1, veiculo.getPlaca());
             stmt.setString(2, veiculo.getModelo());
             stmt.setDouble(3, veiculo.getValorDiaria());
-            stmt.setString(4, veiculo.getStatusVeiculo().name());
 
             stmt.executeUpdate();
 
@@ -51,7 +49,7 @@ public class VeiculoRepositoryJdbc {
                         rs.getString("placa"),
                         rs.getString("modelo"),
                         rs.getDouble("valor_diaria"),
-                        StatusVeiculo.valueOf(rs.getString("status"))
+                        Status.valueOf(rs.getString("status"))
                 );
                 veiculos.add(veiculo);
             }
@@ -77,7 +75,7 @@ public class VeiculoRepositoryJdbc {
                             rs.getString("placa"),
                             rs.getString("modelo"),
                             rs.getDouble("valor_diaria"),
-                            StatusVeiculo.valueOf(rs.getString("status"))
+                            Status.valueOf(rs.getString("status"))
                     );
 
                     return Optional.of(veiculo);
@@ -106,7 +104,7 @@ public class VeiculoRepositoryJdbc {
                             rs.getString("placa"),
                             rs.getString("modelo"),
                             rs.getDouble("valor_diaria"),
-                            StatusVeiculo.valueOf(rs.getString("status"))
+                            Status.valueOf(rs.getString("status"))
                     );
 
                     return Optional.of(veiculo);
@@ -131,7 +129,7 @@ public class VeiculoRepositoryJdbc {
             stmt.setString(1, veiculo.getPlaca());
             stmt.setString(2, veiculo.getModelo());
             stmt.setDouble(3, veiculo.getValorDiaria());
-            stmt.setString(4, veiculo.getStatusVeiculo().name());
+            stmt.setString(4, veiculo.getStatus().name());
             stmt.setLong(5, veiculo.getId());
 
             stmt.executeUpdate();

@@ -1,6 +1,5 @@
 package com.locadora.repository;
 
-import com.locadora.domain.Cliente;
 import com.locadora.domain.Veiculo;
 
 import java.util.Optional;
@@ -16,19 +15,19 @@ public class VeiculoRepository {
         VeiculoRepositoryJdbc.buscarTodos();
     }
 
-    public static void buscarVeiculoPorId(Long id){
-        VeiculoRepositoryJdbc.buscarPorId(id);
+    public static Optional<Veiculo> buscarVeiculoPorId(Long id){
+        return VeiculoRepositoryJdbc.buscarPorId(id);
     }
 
-    public static void buscarVeiculoporplaca(String placa){
-        VeiculoRepositoryJdbc.buscarPorPlaca(placa);
+    public static Optional<Veiculo> buscarVeiculoporplaca(String placa){
+        return VeiculoRepositoryJdbc.buscarPorPlaca(placa);
     }
 
     public static void atualizar(Veiculo veiculo){
         VeiculoRepositoryJdbc.atualizar(veiculo);
     }
 
-    public static void deletar(long id){
+    public static void deletar(Long id){
         VeiculoRepositoryJdbc.deletar(id);
     }
 }
