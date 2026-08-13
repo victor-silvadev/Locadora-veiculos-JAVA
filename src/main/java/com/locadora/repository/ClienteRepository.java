@@ -10,7 +10,7 @@ public class ClienteRepository {
     }
 
     public static void buscarTodos(){
-        ClienteRepositoryJdbc.buscarTodos();
+        System.out.println( ClienteRepositoryJdbc.buscarTodos());
     }
 
     public static void buscarPorId(Long id){
@@ -18,10 +18,7 @@ public class ClienteRepository {
     }
 
     public static boolean buscarPorCpf(String cpf){
-        if(ClienteRepositoryJdbc.buscarPorCpf(cpf).isPresent()){
-            return true;
-        }
-        return false;
+        return ClienteRepositoryJdbc.buscarPorCpf(cpf).isPresent();
 
     }
 
@@ -32,4 +29,5 @@ public class ClienteRepository {
     public static void deletar(long id){
         ClienteRepositoryJdbc.deletar(id);
     }
+
 }
