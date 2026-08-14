@@ -183,4 +183,18 @@ public class VeiculoRepositoryJdbc {
         }
     }
 
+
+    public static void atualizarStatus(Long id){
+        String sql = "UPDATE `locadora_db`.`veiculo` SET `status` = 'ALUGADO' WHERE (`id` = ?);";
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1,id);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar as informaçoes do veiculo, ID nao encontrado ", e);
+        }
+    }
+
 }

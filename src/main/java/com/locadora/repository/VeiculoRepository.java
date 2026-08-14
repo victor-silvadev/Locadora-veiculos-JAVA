@@ -31,6 +31,10 @@ public class VeiculoRepository {
         VeiculoRepositoryJdbc.atualizar(veiculo);
     }
 
+    public static void atualizarStatusVeiculo(Long id){
+        VeiculoRepositoryJdbc.atualizarStatus(id);
+    }
+
     public static void deletar(Long id){
         VeiculoRepositoryJdbc.deletar(id);
     }

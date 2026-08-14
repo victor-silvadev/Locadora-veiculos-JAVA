@@ -53,12 +53,12 @@ public class LocacaoRepositoryJdbc {
     }
 
 
-    public static void atualizar(Locacao locacao){
+    public static void atualizar(Long id,Status status){
         String sql = "UPDATE `locadora_db`.`locacao` SET `status` = ? WHERE (`id` = ?);";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1,locacao.getStatus().name());
-            stmt.setLong(2, locacao.getId());
+            stmt.setString(1,status.name());
+            stmt.setLong(2, id);
 
             stmt.executeUpdate();
 
@@ -101,6 +101,54 @@ public class LocacaoRepositoryJdbc {
             throw new RuntimeException("Erro ao buscar veiculos", e);
         }
     }
+
+
+
+
+    public static Locacao buscarPorId(Long id) {
+        String sql = "SELECT `id`, `cliente_id`, `veiculo_id`, `data_inicio`, `data_fim_prevista`, `data_devolucao`, `valor_total`, `status` " +
+                "FROM locacao WHERE veiculo_id = ?;";
+
+        Locacao locacao = null;
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                Veiculo veiculo = new Veiculo();
+                cliente.setId(rs.getLong("cliente_id"));
+                veiculo.setId(rs.getLong("veiculo_id"));
+
+                locacao = new Locacao(
+                        rs.getLong("id"),
+                        cliente,
+                        veiculo,
+                        rs.getObject("data_inicio", LocalDate.class),
+                        rs.getObject("data_fim_prevista", LocalDate.class),
+                        rs.getObject("data_devolucao", LocalDate.class),
+                        rs.getDouble("valor_total"),
+                        Status.valueOf(rs.getString("status"))
+                );
+
+            }
+            return locacao;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar veiculos", e);
+        }
+    }
+
+
+
+
+
+
+
 
     public static Locacao devolucao(String placa){
         String sql = """
@@ -147,6 +195,24 @@ public class LocacaoRepositoryJdbc {
                 throw new RuntimeException(e);
             }
 
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void atualizarLocacao(Long id,LocalDate localdate,double valor ) {
+        String sql = "UPDATE `locadora_db`.`locacao` SET `data_devolucao` = ?, `valor_total` = ? WHERE (`id` = ?);";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setObject(1, localdate);
+            stmt.setDouble(2, valor);
+            stmt.setLong(3, id);
+
+
+            stmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

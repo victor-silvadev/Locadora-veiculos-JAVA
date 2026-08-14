@@ -35,4 +35,6 @@ public class Locacao {
         this.devolucao = devolucao;
         this.valorTotal = valorTotal;
     }
+
+
 }

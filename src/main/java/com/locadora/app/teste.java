@@ -12,8 +12,11 @@ public class teste {
 //        ClienteServices.entrarNaConta("70716998602");
 //        ClienteRepository.buscarTodos();
 //        VeiculoService.adicionarVeiculo("LPJ8722","Fiat Uno",40.00);
-//        LocacaoServices.salvarLocacao("13899887654","LPJ8722", LocalDate.now(),
-//                LocalDate.of(2026,8,22));
+//        LocacaoServices.salvarLocacao("13899887654","lpi8122", LocalDate.now(),
+//                LocalDate.of(2026,8,15));
+
+//        LocacaoServices.efetuarDevolucao("lpi8122",LocalDate.of(2026,8,25));
+//        LocacaoServices.pagamentoLocacao("lpi8122",315.48);
 
     }
 
