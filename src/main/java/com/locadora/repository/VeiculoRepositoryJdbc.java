@@ -93,7 +93,7 @@ public class VeiculoRepositoryJdbc {
     }
 
     public static  Optional<Veiculo> buscarPorPlaca(String placa) {
-        String sql = "SELECT placa, modelo, valor_diaria, status FROM veiculo WHERE placa = ?";
+        String sql = "SELECT  placa, modelo, valor_diaria, status FROM veiculo WHERE placa = ?";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, placa);
@@ -101,6 +101,36 @@ public class VeiculoRepositoryJdbc {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     Veiculo veiculo = new Veiculo(
+                            rs.getString("placa"),
+                            rs.getString("modelo"),
+                            rs.getDouble("valor_diaria"),
+                            Status.valueOf(rs.getString("status"))
+                    );
+
+                    return Optional.of(veiculo);
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException("Erro ao buscar veiculo por PLACA ", e);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar veiculo por PLACA ", e);
+        }
+        return Optional.empty();
+    }
+
+
+    public static  Optional<Veiculo> buscarTodasInfoPorPlaca(String placa) {
+        String sql = "SELECT id, placa, modelo, valor_diaria, status FROM veiculo WHERE placa = ?";
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, placa);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Veiculo veiculo = new Veiculo(
+                            rs.getLong("id"),
                             rs.getString("placa"),
                             rs.getString("modelo"),
                             rs.getDouble("valor_diaria"),

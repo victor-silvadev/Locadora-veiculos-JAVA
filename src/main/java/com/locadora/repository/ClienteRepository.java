@@ -2,6 +2,8 @@ package com.locadora.repository;
 
 import com.locadora.domain.Cliente;
 
+import java.util.Optional;
+
 public class ClienteRepository {
 
     public static Cliente salvar(Cliente cliente){
@@ -17,8 +19,8 @@ public class ClienteRepository {
         ClienteRepositoryJdbc.buscarPorId(id);
     }
 
-    public static boolean buscarPorCpf(String cpf){
-        return ClienteRepositoryJdbc.buscarPorCpf(cpf).isPresent();
+    public static Optional<Cliente> buscarPorCpf(String cpf){
+         return ClienteRepositoryJdbc.buscarPorCpf(cpf);
 
     }
 

@@ -23,6 +23,10 @@ public class VeiculoRepository {
         return VeiculoRepositoryJdbc.buscarPorPlaca(placa);
     }
 
+    public static Optional<Veiculo> buscarTodasInfoVeiculoporplaca(String placa){
+        return VeiculoRepositoryJdbc.buscarTodasInfoPorPlaca(placa);
+    }
+
     public static void atualizar(Veiculo veiculo){
         VeiculoRepositoryJdbc.atualizar(veiculo);
     }

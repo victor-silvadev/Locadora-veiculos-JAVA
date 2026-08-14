@@ -4,6 +4,8 @@ import com.locadora.domain.Cliente;
 import com.locadora.exception.ClienteInformationException;
 import com.locadora.repository.ClienteRepository;
 
+import java.util.Optional;
+
 public class ClienteServices {
 
 
@@ -21,8 +23,8 @@ public class ClienteServices {
             throw new ClienteInformationException("E-mail inválido: " + email);
         }
 
-
-        if (ClienteRepository.buscarPorCpf(cpf)){
+        Optional<Cliente> optionalCliente = ClienteRepository.buscarPorCpf(cpf);
+        if (optionalCliente.isPresent()){
             throw new ClienteInformationException("Este Cpf ja esta cadastrado!");
         }
 
@@ -35,7 +37,8 @@ public class ClienteServices {
             throw new IllegalArgumentException("CPF inválido!");
         }
 
-        if (!ClienteRepository.buscarPorCpf(cpf)){
+        Optional<Cliente> clienteOptional = ClienteRepository.buscarPorCpf(cpf);
+        if (!clienteOptional.isPresent()){
             throw new ClienteInformationException("Este Cpf ja não esta cadastrado!");
         }
         System.out.println("entrou");
