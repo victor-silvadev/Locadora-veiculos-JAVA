@@ -23,6 +23,6 @@ public class LocacaoApplication {
      */
     public static void main(String[] args) {
         // Digite qualquer palavra e inicie o projeto
-        Projeto.start("Start");
+        Projeto.start("");
     }
 }
