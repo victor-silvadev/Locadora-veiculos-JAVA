@@ -4,6 +4,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Utility factory for obtaining JDBC connections.
+ * <p>
+ * Centralizes connection configuration and exposes a single static method
+ * to obtain a new Connection to the MySQL database used by the project.
+ * </p>
+ * <p>
+ * Fábrica utilitária para obtenção de conexões JDBC.
+ * Centraliza a configuração de conexão e expõe um método estático para
+ * obter uma nova Connection para o banco de dados MySQL usado no projeto.
+ * </p>
+ */
 public class ConnectionFactory {
 
     // Configurações da URL de Conexão com o MySQL Docker

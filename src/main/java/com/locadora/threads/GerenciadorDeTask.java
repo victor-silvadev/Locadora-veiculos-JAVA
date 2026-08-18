@@ -17,10 +17,34 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * Interactive task manager that runs the console UI loop.
+ * <p>
+ * This class implements Runnable and provides a simple console-based menu for
+ * user registration, login and operations related to vehicle rental, such as
+ * renting, registering vehicles and returning vehicles.
+ * </p>
+ * <p>
+ * Gerenciador de tarefas interativo que executa o loop da interface de console.
+ * Implementa Runnable e fornece um menu para cadastro, login e operações de locação
+ * como alugar, cadastrar e devolver veículos.
+ * </p>
+ *
+ * @author Locadora de Veículos
+ * @since 2024
+ */
 public class GerenciadorDeTask implements Runnable{
-private static final Scanner SCANNER = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
     @Override
+    /**
+     * Main loop executed by the thread.
+     * <p>
+     * Presents a simple menu for access, registration and exits when requested.
+     * </p>
+     *
+     * @throws RuntimeException for unexpected runtime errors during console interaction
+     */
     public void run() {
         while(true){
             System.out.println("=================================================");
@@ -50,6 +74,14 @@ private static final Scanner SCANNER = new Scanner(System.in);
 
 
 
+    /**
+     * Performs the interactive customer registration flow.
+     * <p>
+     * Reads user input from console and calls ClienteServices.cadastrarCliente.
+     * </p>
+     *
+     * @throws RuntimeException if registration validation fails
+     */
     public void executarCadastroCliente(){
 
         while(true){
@@ -89,6 +121,15 @@ private static final Scanner SCANNER = new Scanner(System.in);
     }
 
 
+    /**
+     * Performs the interactive customer login flow.
+     * <p>
+     * Prompts for CPF and delegates validation to ClienteServices. On success
+     * it navigates to the customer services menu.
+     * </p>
+     *
+     * @throws RuntimeException if CPF is invalid or not registered
+     */
     public void executarEntradaCliente(){
         boolean clienteE = true;
         while(clienteE){
@@ -115,6 +156,11 @@ private static final Scanner SCANNER = new Scanner(System.in);
         }
     }
 
+    /**
+     * Presents the logged-in customer's service menu and routes choices.
+     *
+     * @throws RuntimeException for invalid menu input
+     */
     public void executarServicosCliente(){
         boolean clienteS = true;
         while(clienteS){
@@ -141,6 +187,14 @@ private static final Scanner SCANNER = new Scanner(System.in);
     }
 
 
+    /**
+     * Interactive flow to perform vehicle rental.
+     * <p>
+     * Shows available vehicles, reads dates and CPF and delegates to LocacaoServices.
+     * </p>
+     *
+     * @throws RuntimeException when validation fails or data parsing is incorrect
+     */
     public void aluguelVeicular(){
         DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -225,6 +279,14 @@ private static final Scanner SCANNER = new Scanner(System.in);
 
 
 
+    /**
+     * Interactive flow to register a new vehicle.
+     * <p>
+     * Reads vehicle data from console and calls VeiculoService.adicionarVeiculo.
+     * </p>
+     *
+     * @throws RuntimeException when vehicle data is invalid or persistence fails
+     */
     public void cadastroVeicular() {
         while(true){
             System.out.println("\nDigite a placa do veiculo:");
@@ -261,6 +323,14 @@ private static final Scanner SCANNER = new Scanner(System.in);
 
 
 
+  /**
+   * Interactive flow to process vehicle return and payment.
+   * <p>
+   * Reads plate and return date then delegates to LocacaoServices for processing.
+   * </p>
+   *
+   * @throws RuntimeException when return processing or payment fails
+   */
   public void efetuarDevolucao(){
       DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         while(true){

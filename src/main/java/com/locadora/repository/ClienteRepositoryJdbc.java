@@ -8,9 +8,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * JDBC implementation of customer data access operations.
+ * <p>
+ * This class handles all database operations for customer (Cliente) entities
+ * using JDBC connections. It provides methods to create, read, update, and delete
+ * customer records in the database.
+ * </p>
+ * <p>
+ * Implementação JDBC das operações de acesso a dados de cliente.
+ * Esta classe gerencia todas as operações de banco de dados para entidades de cliente
+ * usando conexões JDBC. Fornece métodos para criar, ler, atualizar e deletar
+ * registros de cliente no banco de dados.
+ * </p>
+ *
+ * @author Locadora de Veículos
+ * @version 1.0
+ * @since 2024
+ */
 public class ClienteRepositoryJdbc {
 
-
+    /**
+     * Saves a new customer to the database.
+     * <p>
+     * Inserts a customer record into the database and sets the generated ID
+     * on the customer object.
+     * </p>
+     * <p>
+     * Salva um novo cliente no banco de dados.
+     * Insere um registro de cliente no banco de dados e define o ID gerado
+     * no objeto cliente.
+     * </p>
+     *
+     * @param cliente the customer object to be saved / objeto cliente a ser salvo
+     * @return the customer object with the generated database ID
+     *         / objeto cliente com ID do banco de dados gerado
+     * @throws RuntimeException if an error occurs during the database operation
+     *                          / se um erro ocorrer durante a operação do banco de dados
+     */
     public static Cliente salvar(Cliente cliente) {
         String sql = "INSERT INTO cliente (nome, cpf, email) VALUES (?, ?, ?)";
 
@@ -36,8 +71,21 @@ public class ClienteRepositoryJdbc {
         }
     }
 
-
-    public static  List<Cliente> buscarTodos() {
+    /**
+     * Retrieves all customers from the database.
+     * <p>
+     * Fetches all customer records from the database and returns them as a list.
+     * </p>
+     * <p>
+     * Recupera todos os clientes do banco de dados.
+     * Busca todos os registros de cliente do banco de dados e os retorna como uma lista.
+     * </p>
+     *
+     * @return a list of all customers in the database / lista de todos os clientes do banco de dados
+     * @throws RuntimeException if an error occurs during the database operation
+     *                          / se um erro ocorrer durante a operação do banco de dados
+     */
+    public static List<Cliente> buscarTodos() {
         String sql = "SELECT id, nome, cpf, email FROM cliente";
         List<Cliente> clientes = new ArrayList<>();
 
@@ -61,8 +109,23 @@ public class ClienteRepositoryJdbc {
         }
     }
 
-
-    public static  Optional<Cliente> buscarPorId(Long id) {
+    /**
+     * Retrieves a customer by their unique ID.
+     * <p>
+     * Searches for a customer in the database using their ID.
+     * </p>
+     * <p>
+     * Recupera um cliente por seu ID único.
+     * Pesquisa por um cliente no banco de dados usando seu ID.
+     * </p>
+     *
+     * @param id the customer's unique identifier / identificador único do cliente
+     * @return an Optional containing the customer if found, empty otherwise
+     *         / um Optional contendo o cliente se encontrado, vazio caso contrário
+     * @throws RuntimeException if an error occurs during the database operation
+     *                          / se um erro ocorrer durante a operação do banco de dados
+     */
+    public static Optional<Cliente> buscarPorId(Long id) {
         String sql = "SELECT id, nome, cpf, email FROM cliente WHERE id = ?";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -91,8 +154,23 @@ public class ClienteRepositoryJdbc {
         return Optional.empty();
     }
 
-
-    public static  Optional<Cliente> buscarPorCpf(String cpf) {
+    /**
+     * Retrieves a customer by their CPF.
+     * <p>
+     * Searches for a customer in the database using their CPF (Cadastro de Pessoas Físicas).
+     * </p>
+     * <p>
+     * Recupera um cliente por seu CPF.
+     * Pesquisa por um cliente no banco de dados usando seu CPF (Cadastro de Pessoas Físicas).
+     * </p>
+     *
+     * @param cpf the customer's CPF / CPF do cliente
+     * @return an Optional containing the customer if found, empty otherwise
+     *         / um Optional contendo o cliente se encontrado, vazio caso contrário
+     * @throws RuntimeException if an error occurs during the database operation
+     *                          / se um erro ocorrer durante a operação do banco de dados
+     */
+    public static Optional<Cliente> buscarPorCpf(String cpf) {
         String sql = "SELECT id, nome, cpf, email FROM cliente WHERE cpf = ?";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -119,7 +197,21 @@ public class ClienteRepositoryJdbc {
         return Optional.empty();
     }
 
-
+    /**
+     * Updates a customer's information in the database.
+     * <p>
+     * Modifies an existing customer record with new name, CPF, and email information.
+     * </p>
+     * <p>
+     * Atualiza as informações de um cliente no banco de dados.
+     * Modifica um registro de cliente existente com novas informações de nome, CPF e email.
+     * </p>
+     *
+     * @param cliente the customer object with updated information
+     *                / objeto cliente com informações atualizadas
+     * @throws RuntimeException if an error occurs during the database operation
+     *                          / se um erro ocorrer durante a operação do banco de dados
+     */
     public static void atualizar(Cliente cliente) {
         String sql = "UPDATE `locadora_db`.`cliente` SET `nome` = ?, `cpf` = ?, `email` = ? WHERE (`id` = ?);";
         try (Connection conn = ConnectionFactory.getConnection();
@@ -136,8 +228,21 @@ public class ClienteRepositoryJdbc {
         }
     }
 
-
-    public static  void deletar(Long id) {
+    /**
+     * Deletes a customer from the database.
+     * <p>
+     * Removes a customer record from the database by their ID.
+     * </p>
+     * <p>
+     * Deleta um cliente do banco de dados.
+     * Remove um registro de cliente do banco de dados por seu ID.
+     * </p>
+     *
+     * @param id the customer's unique identifier / identificador único do cliente
+     * @throws RuntimeException if an error occurs during the database operation
+     *                          / se um erro ocorrer durante a operação do banco de dados
+     */
+    public static void deletar(Long id) {
         String sql = "DELETE FROM `locadora_db`.`cliente` WHERE (`id` = ?);";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

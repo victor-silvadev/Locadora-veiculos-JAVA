@@ -11,7 +11,44 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * JDBC implementation of rental transaction data access operations.
+ * <p>
+ * This class handles all database operations for rental transaction (Locacao) entities
+ * using JDBC connections. It provides methods to create, read, update, and delete
+ * rental records in the database.
+ * </p>
+ * <p>
+ * Implementação JDBC das operações de acesso a dados de transação de aluguel.
+ * Esta classe gerencia todas as operações de banco de dados para entidades de transação de aluguel
+ * usando conexões JDBC. Fornece métodos para criar, ler, atualizar e deletar
+ * registros de aluguel no banco de dados.
+ * </p>
+ *
+ * @author Locadora de Veículos
+ * @version 1.0
+ * @since 2024
+ */
 public class LocacaoRepositoryJdbc {
+
+    /**
+     * Saves a new rental transaction to the database.
+     * <p>
+     * Inserts a rental record into the database with EM_ANDAMENTO status
+     * and sets the generated ID on the rental object.
+     * </p>
+     * <p>
+     * Salva uma nova transação de aluguel no banco de dados.
+     * Insere um registro de aluguel no banco de dados com status EM_ANDAMENTO
+     * e define o ID gerado no objeto aluguel.
+     * </p>
+     *
+     * @param locacao the rental transaction object to be saved / objeto aluguel a ser salvo
+     * @return the rental transaction with the generated database ID
+     *         / transação de aluguel com ID do banco de dados gerado
+     * @throws RuntimeException if an error occurs during the database operation
+     *                          / se um erro ocorrer durante a operação do banco de dados
+     */
 
     public static Locacao salvar(Locacao locacao){
        String sql = "INSERT INTO `locadora_db`.`locacao` " +
