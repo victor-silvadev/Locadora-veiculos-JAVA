@@ -32,6 +32,8 @@ public class ClienteServices {
         return ClienteRepository.salvar(cliente);
     }
 
+
+
     public static void entrarNaConta(String cpf){
         if (cpf == null || cpf.length() != 11) {
             throw new IllegalArgumentException("CPF inválido!");
@@ -39,9 +41,8 @@ public class ClienteServices {
 
         Optional<Cliente> clienteOptional = ClienteRepository.buscarPorCpf(cpf);
         if (!clienteOptional.isPresent()){
-            throw new ClienteInformationException("Este Cpf ja não esta cadastrado!");
+            throw new ClienteInformationException("Este Cpf não esta cadastrado!");
         }
-        System.out.println("entrou");
     }
 
 }

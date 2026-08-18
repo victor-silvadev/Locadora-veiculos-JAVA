@@ -39,7 +39,7 @@ public class LocacaoServices {
         }
         Locacao locacao = new Locacao(cliente,veiculo,dataInicio,dataFimPrevista);
         LocacaoRepository.salvar(locacao);
-        VeiculoRepository.atualizarStatusVeiculo(veiculo.getId());
+        VeiculoRepository.atualizarStatusVeiculo(veiculo.getId(), Status.ALUGADO);
     }
 
 
@@ -66,6 +66,8 @@ public class LocacaoServices {
         }
 
          LocacaoRepository.atualizarPagamentoL(locacao.getId(), dataDevolucao, valorFinal);
+        System.out.printf("\nNome: %s \nPlaca: %s\nData de devolução: %s\nValor total a pagar: %.2f",devolucao.getCliente().getNome(),placa,dataDevolucao,valorFinal);
+
     }
 
 
@@ -73,6 +75,7 @@ public class LocacaoServices {
 
 
     public static void pagamentoLocacao(String placa,double valorCliente){
+        Status status = Status.DISPONIVEL;
         double trocoOuValorFinal = 0;
 
         Optional<Veiculo> optionalVeiculo = VeiculoRepository.buscarTodasInfoVeiculoporplaca(placa);
@@ -86,14 +89,14 @@ public class LocacaoServices {
             System.out.printf(" Valor a pagar: %.2f\n Valor pago: %.2f\n Troco: %.2f",valorTotalLocacao,valorCliente,trocoOuValorFinal);
             LocacaoRepository.atualizar(locacao.getId(),Status.PAGO);
             LocacaoRepository.deletar(locacao);
-            VeiculoRepository.atualizarStatusVeiculo(veiculo.getId());
+            VeiculoRepository.atualizarStatusVeiculo(veiculo.getId(),status);
 
         }else if(valorTotalLocacao == valorCliente) {
             trocoOuValorFinal = valorTotalLocacao - valorCliente;
             System.out.printf(" Valor a pagar: %.2f\n Valor pago: %.2f\n Troco: %.2f",valorTotalLocacao,valorCliente,trocoOuValorFinal);
             LocacaoRepository.atualizar(locacao.getId(),Status.PAGO);
             LocacaoRepository.deletar(locacao);
-            VeiculoRepository.atualizarStatusVeiculo(veiculo.getId());
+            VeiculoRepository.atualizarStatusVeiculo(veiculo.getId(),status);
 
         } else {
             throw new LocacaoInfomationException("Dinheiro insuficiente!");

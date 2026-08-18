@@ -20,6 +20,7 @@ public class LocacaoRepositoryJdbc {
        try(Connection conn = ConnectionFactory.getConnection();
            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
 
+
            stmt.setLong(1,locacao.getCliente().getId());
            stmt.setLong(2,locacao.getVeiculo().getId());
            stmt.setObject(3,locacao.getDataInicio());

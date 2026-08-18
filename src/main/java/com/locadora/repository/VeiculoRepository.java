@@ -1,7 +1,9 @@
 package com.locadora.repository;
 
+import com.locadora.domain.Status;
 import com.locadora.domain.Veiculo;
 
+import java.util.List;
 import java.util.Optional;
 
 public class VeiculoRepository {
@@ -11,8 +13,8 @@ public class VeiculoRepository {
         return veiculo;
     }
 
-    public static void buscarTodosVeiculos(){
-        VeiculoRepositoryJdbc.buscarTodos();
+    public static List<Veiculo> buscarTodosVeiculos(){
+        return VeiculoRepositoryJdbc.buscarTodos();
     }
 
     public static Optional<Veiculo> buscarVeiculoPorId(Long id){
@@ -31,8 +33,8 @@ public class VeiculoRepository {
         VeiculoRepositoryJdbc.atualizar(veiculo);
     }
 
-    public static void atualizarStatusVeiculo(Long id){
-        VeiculoRepositoryJdbc.atualizarStatus(id);
+    public static void atualizarStatusVeiculo(Long id, Status status){
+        VeiculoRepositoryJdbc.atualizarStatus(id,status);
     }
 
     public static void deletar(Long id){

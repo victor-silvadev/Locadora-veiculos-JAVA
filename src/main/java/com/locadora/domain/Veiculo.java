@@ -19,11 +19,18 @@ public class Veiculo {
         this.status = status;
     }
 
+
     public Veiculo(Long id, String placa, String modelo, double valorDiaria, Status status) {
         this.id = id;
         this.placa = placa;
         this.modelo = modelo;
         this.valorDiaria = valorDiaria;
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("🚗 [%s] %-7s | Diária: R$ %6.2f | Status: %s\n",
+                placa, modelo, valorDiaria, status);
     }
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
 public class VeiculoRepositoryJdbc {
 
     public static Veiculo slavar(Veiculo veiculo){
-        String sql = "INSERT INTO `locadora_db`.`veiculo` (`placa`, `modelo`, `valor_diaria`, `status`) VALUES (?, ?, ?, `DISPONIVEL`);";
+        String sql = "INSERT INTO `locadora_db`.`veiculo` (`placa`, `modelo`, `valor_diaria`, `status`) VALUES (?, ?, ?, ?);";
 
         try(Connection conn = ConnectionFactory.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -20,6 +20,7 @@ public class VeiculoRepositoryJdbc {
             stmt.setString(1, veiculo.getPlaca());
             stmt.setString(2, veiculo.getModelo());
             stmt.setDouble(3, veiculo.getValorDiaria());
+            stmt.setString(4,veiculo.getStatus().name());
 
             stmt.executeUpdate();
 
@@ -184,11 +185,12 @@ public class VeiculoRepositoryJdbc {
     }
 
 
-    public static void atualizarStatus(Long id){
-        String sql = "UPDATE `locadora_db`.`veiculo` SET `status` = 'ALUGADO' WHERE (`id` = ?);";
+    public static void atualizarStatus(Long id, Status status){
+        String sql = "UPDATE `locadora_db`.`veiculo` SET `status` = ? WHERE (`id` = ?);";
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setLong(1,id);
+            stmt.setString(1, status.name());
+            stmt.setLong(2, id);
 
             stmt.executeUpdate();
 

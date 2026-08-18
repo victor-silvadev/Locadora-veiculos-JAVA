@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class VeiculoService {
 
-    public static Veiculo adicionarVeiculo(String placa, String modelo, double precoPorDiaria){
+    public static void adicionarVeiculo(String placa, String modelo, double precoPorDiaria){
         if (placa.isBlank() || modelo.isBlank()){
             throw new VeiculoInformationException("Adicione as informaçoes restantes");
 
@@ -24,13 +24,13 @@ public class VeiculoService {
             throw new VeiculoInformationException("Veiculo com a placa: "+ placa+", Ja existe em nosso banco de dados");
         }
 
-        Veiculo veiculo = new Veiculo(placa,modelo,precoPorDiaria, Status.DISPONIVEL);
-        return VeiculoRepository.salvar(veiculo);
+        Veiculo veiculo = new Veiculo(placa.toUpperCase(),modelo,precoPorDiaria, Status.DISPONIVEL);
+         VeiculoRepository.salvar(veiculo);
     }
 
 
 
-    public static void atualizarInformacoesVeiculo(String placa){
+    public static void atualizarInformacoesVeiculo(String placa,Status status){
         Optional<Veiculo> optionalVeiculo = VeiculoRepository.buscarVeiculoporplaca(placa);
 
         if (!optionalVeiculo.isPresent()){
